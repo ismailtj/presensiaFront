@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useApi = (endpoint, options = {}, autoLoad = true) => {
-  const [data, setData] = useState(null);
+const useApiGet = (endpoint, options = {}, autoLoad = true) => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(autoLoad);
   const [error, setError] = useState(null);
+
+  const token = localStorage.getItem('jwt');
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios(endpoint, options);
-      setData(res.data);
+      
+      const res = await axios.get('http://localhost:1337/api'+endpoint, {
+        headers: {
+          Authorization:  `Bearer ${token}`
+        }
+      }, options);
+      console.log(res);
+      
+      setData(res.data.data);
       setError(null);
     } catch (err) {
       setError(err);
@@ -27,4 +36,4 @@ const useApi = (endpoint, options = {}, autoLoad = true) => {
   return { data, loading, error, refetch: fetchData };
 };
 
-export default useApi;
+export default useApiGet;
