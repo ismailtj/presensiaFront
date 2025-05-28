@@ -103,7 +103,6 @@ const SeancesPage = () => {
               key={seance.id}
               className="border rounded p-4 shadow-sm hover:shadow-md transition"
             >
-              <button onClick={console.log(seance)} >lol</button>
               <p><strong>Date :</strong> {seance.Date}</p>
               <p><strong>Heure :</strong> {seance.debut} - {seance.fin}</p>
               <p><strong>Module :</strong> {seance.module?.Name}</p>
@@ -137,7 +136,6 @@ const SeancesPage = () => {
           
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
             <h3 className="text-xl font-bold mb-4">{editSeance ? 'Modifier' : 'Ajouter'} une séance</h3>
-      <button onClick={console.log(editSeance)} >vvvv</button>
 
             <div className="space-y-3">
               <input

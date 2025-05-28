@@ -1,6 +1,6 @@
-import QRCode from 'react-qr-code';
+
 import { useParams } from 'react-router-dom';
-// import QRCode from 'qrcode.react';
+import QRCode from 'react-qr-code';
 
 const QrPage = () => {
   const { id } = useParams();
