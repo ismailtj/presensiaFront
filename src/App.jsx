@@ -11,25 +11,38 @@ import EtudiantPage from './pages/EtudiantPage';
 
 
 
-function App() {
-  const [count, setCount] = useState(0)
+// function App() {
+//   const [count, setCount] = useState(0)
 
+//   return (
+//     <>
+//       <Router>
+//       <Routes>
+//         <Route path="/login" element={<Login />} />
+
+//         <Route element={<PrivateRoute />}>
+//           <Route path="/prof" element={<ProfPage />} />
+//           <Route path="/etudiant" element={<EtudiantPage />} />
+//         </Route>
+
+//         <Route path="*" element={<Login />} />
+//       </Routes>
+//     </Router>
+//     </>
+//   )
+// }
+
+// export default App
+
+import React from 'react';
+import UserManager from './components/UserManager';
+
+const App = () => {
   return (
-    <>
-      <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
+    <div className="min-h-screen bg-gray-100 p-4">
+      <UserManager />
+    </div>
+  );
+};
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/prof" element={<ProfPage />} />
-          <Route path="/etudiant" element={<EtudiantPage />} />
-        </Route>
-
-        <Route path="*" element={<Login />} />
-      </Routes>
-    </Router>
-    </>
-  )
-}
-
-export default App
+export default App;
