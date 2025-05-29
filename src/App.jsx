@@ -11,6 +11,7 @@ import UserPage from './pages/prof/UserPage';
 import SeancesPage from './pages/prof/SeancesPage';
 import ModulePage from './pages/prof/ModulePage';
 import GroupesPAges from './pages/prof/GroupesPAges';
+import QrPage from './pages/prof/QrPage';
 
 
 
@@ -31,6 +32,7 @@ function App() {
             <Route path='modules' element={<ModulePage />} />
             <Route path='groups' element={<GroupesPAges />} />
           </Route>
+          <Route path="/qrcode/:id" element={<QrPage />} />
           <Route path="/etudiant" element={<EtudiantPage />} />
         </Route>
 

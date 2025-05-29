@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-#root {
+/*#root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -42,4 +42,49 @@
 
 .read-the-docs {
   color: #888;
+}*/
+/* css by you */
+
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Permet au footer de rester en bas de la page */
+}
+.main-content {
+    flex-grow: 1; /* Le contenu principal prend tout l'espace restant */
+    padding: 20px; /* Un peu d'espace autour du contenu */
+}
+footer {
+    margin-top: auto; /* Pousse le footer tout en bas */
+    padding: 20px;
+    background-color: #f8f9fa; /* Couleur de fond légère */
+    text-align: center;
+    border-top: 1px solid #e7e7e7; /* Petite ligne de séparation */
+}
+/* Styles spécifiques pour le tableau responsive */
+.table-responsive {
+    overflow-x: auto; /* Permet le défilement horizontal */
+}
+/* Styles pour les messages flash */
+.flash-message {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 5px;
+}
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.flash-message.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
 }
