@@ -18,7 +18,6 @@ const useAPIDelete = (endpoint, id, options = {}, autoLoad = true) => {
             Authorization:  `Bearer ${token}`
           }
         }, options);
-        console.log(res);
         
         setData(res.data.data);
         setError(null);

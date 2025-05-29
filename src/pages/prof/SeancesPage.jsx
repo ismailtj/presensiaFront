@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useApiGet from '../../hooks/useApiGet';
 import useApiUpdate from '../../hooks/useApiUpdate';
 import axios from 'axios';
+import SeanceStudentModal from '../../components/SeanceStudentModal';
 
 const HOURS = [
   '08:00', '09:00', '10:00', '11:00', '12:00',
@@ -23,6 +24,8 @@ const SeancesPage = () => {
     moduleId: '',
     groupId: ''
   });
+  const [selectedSeance, setselectedSeance] = useState()
+  const [showList, setShowList] = useState(false);
 
   const clearForm = () => {
     setForm({
@@ -66,14 +69,13 @@ const SeancesPage = () => {
 
   const handleEdit = (seance) => {
     setEditSeance(seance);
-    console.log(seance);
     
     setForm({
       Date: seance.Date,
       debut: seance.debut.slice(0, 5),
       fin: seance.fin.slice(0, 5),
-      moduleId: seance.module?.id,
-      groupId: seance.group?.id
+      moduleId: seance.module?.documentId,
+      groupId: seance.group?.documentId
     });
     setShowModal(true);
   };
@@ -97,42 +99,101 @@ const SeancesPage = () => {
       </div>
 
       <div className="space-y-4">
+        <table className="table table-striped table-hover table-bordered align-middle"> 
+                        <thead className="table-primary"> 
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Heure</th>
+                                <th scope="col">Module</th>
+                                <th scope="col">Groupe</th>
+                                
+                                <th scope="col" className="text-center">Actions</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        
         {data?.length > 0 ? (
           data.map(seance => (
-            <div
-              key={seance.id}
-              className="border rounded p-4 shadow-sm hover:shadow-md transition"
-            >
-              <p><strong>Date :</strong> {seance.Date}</p>
-              <p><strong>Heure :</strong> {seance.debut} - {seance.fin}</p>
-              <p><strong>Module :</strong> {seance.module?.Name}</p>
-              <p><strong>Groupe :</strong> {seance.group?.name}</p>
-              <div className="mt-2 space-x-2">
-                <button
-                  onClick={() => handleEdit(seance)}
-                  className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-                >Modifier</button>
-                <button
-                  onClick={async () => { await axios.delete(`http://localhost:1337/api/seances/${seance.documentId}`, {
-                    headers: {
-                      Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                    }});window.location.reload(); }}
-                  className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
-                >Supprimer</button>
-                <button
-                  onClick={() => window.open(`/qrcode/${seance.id}`, '_blank')}
-                  className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700"
-                >Afficher QR</button>
-              </div>
-            </div>
+            <tr key={seance.id}>
+                                        <td>{seance.Date}</td> 
+                                        <td>{seance.debut.slice(0, 5)} - {seance.fin.slice(0, 5)}</td> 
+                                        <td>{seance.module?.Name}</td> 
+                                        <td>{seance.group?.name}</td> 
+                                        
+                                        <td className="text-center">
+                                            <button 
+                                                className="btn btn-sm btn-info me-2" 
+                                                title="Éditer"
+                                                onClick={() => handleEdit(seance)} 
+                                            >
+                                                <i className="bi bi-pencil-fill"></i> Éditer
+                                            </button>
+                                            <button 
+                                                className="btn btn-sm btn-danger me-2" 
+                                                title="Supprimer"
+                                                onClick={async () => { await axios.delete(`http://localhost:1337/api/seances/${seance.documentId}`, {
+                                                headers: {
+                                                  Authorization: `Bearer ${localStorage.getItem('jwt')}`
+                                                }});window.location.reload(); }} 
+                                                  >
+                                                <i className="bi bi-trash-fill"></i> Supprimer
+                                            </button>
+                                            <button 
+                                                className="btn btn-sm  btn-info  me-2" 
+                                                title="QR Code"
+                                               onClick={() => window.open(`/qrcode/${seance.documentId}`, '_blank')}
+                                                  >
+                                                <i className="bi bi-trash-fill"></i> Afficher QR
+                                            </button>
+                                            <button 
+                                                className="btn btn-sm  btn-primary  me-2" 
+                                                title="Afficher List"
+                                               onClick={() => {
+                                                  setselectedSeance(seance);
+                                                  setShowList(true);
+                                               }}
+                                                  >
+                                                <i className="bi bi-trash-fill"></i> Afficher List
+                                            </button>
+                                        </td>
+                                    </tr>
+            // <div
+            //   key={seance.id}
+            //   className="border rounded p-4 shadow-sm hover:shadow-md transition"
+            // >
+            //   <p><strong>Date :</strong> {seance.Date}</p>
+            //   <p><strong>Heure :</strong> {seance.debut.slice(0, 5)} - {seance.fin.slice(0, 5)}</p>
+            //   <p><strong>Module :</strong> {seance.module?.Name}</p>
+            //   <p><strong>Groupe :</strong> {seance.group?.name}</p>
+            //   <div className="mt-2 space-x-2">
+            //     <button
+            //       onClick={() => handleEdit(seance)}
+            //       className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+            //     >Modifier</button>
+            //     <button
+            //       onClick={async () => { await axios.delete(`http://localhost:1337/api/seances/${seance.documentId}`, {
+            //         headers: {
+            //           Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            //         }});window.location.reload(); }}
+            //       className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+            //     >Supprimer</button>
+            //     <button
+            //       onClick={() => window.open(`/qrcode/${seance.documentId}`, '_blank')}
+            //       className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700"
+            //     >Afficher QR</button>
+            //   </div>
+            // </div>
           ))
         ) : (
-          <p className="text-gray-600">Aucune séance disponible.</p>
+          <td colSpan="5" className="text-center text-muted py-4">Aucune séance disponible.</td>
         )}
+        </tbody>
+        </table>
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-[#000000d1] bg-opacity-30 flex items-center justify-center z-50"> 
           
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
             <h3 className="text-xl font-bold mb-4">{editSeance ? 'Modifier' : 'Ajouter'} une séance</h3>
@@ -170,7 +231,7 @@ const SeancesPage = () => {
                   onChange={(e) => setForm({ ...form, moduleId: e.target.value })}
                 >
                   <option value={""}>--</option>
-                  {datamodules?.map(mod => <option key={mod.id} value={mod.id}>{mod.Name}</option>)}
+                  {datamodules?.map(mod => <option key={mod.id} value={mod.documentId}>{mod.Name}</option>)}
                 </select>
 
                 <select
@@ -179,7 +240,7 @@ const SeancesPage = () => {
                   onChange={(e) => setForm({ ...form, groupId: e.target.value })}
                 >
                   <option value={""}>--</option>
-                  {datagroups?.map(gr => <option key={gr.id} value={gr.id}>{gr.name}</option>)}
+                  {datagroups?.map(gr => <option key={gr.id} value={gr.documentId}>{gr.name}</option>)}
                 </select>
               </div>
               
@@ -213,6 +274,13 @@ const SeancesPage = () => {
           </div>
         </div>
       )}
+      {showList && (
+      <SeanceStudentModal
+        seance={selectedSeance}
+        groupId={selectedSeance.group?.documentId}
+        onClose={() => setShowList(false)}
+      />
+    )}
     </div>
   </div>
   )
