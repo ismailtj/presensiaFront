@@ -18,6 +18,7 @@ const Login = () => {
       const { jwt, user } = res.data;
       localStorage.setItem('jwt', jwt);
       localStorage.setItem('role', user.type);
+      localStorage.setItem('id', user.id);
       
       if (user.type == 'prof') navigate('/prof');
       else navigate('/etudiant');
