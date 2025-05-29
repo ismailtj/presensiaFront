@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const useApiGet = (endpoint, options = {}, autoLoad = true) => {
   const [data, setData] = useState([]);
@@ -12,7 +13,7 @@ const useApiGet = (endpoint, options = {}, autoLoad = true) => {
     setLoading(true);
     try {
       
-      const res = await axios.get('http://localhost:1337/api'+endpoint, {
+      const res = await axios.get(apiUrl+'/api'+endpoint, {
         headers: {
           Authorization:  `Bearer ${token}`
         }

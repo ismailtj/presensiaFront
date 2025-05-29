@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Modal } from 'bootstrap';
 import useApiGet from '../../hooks/useApiGet'; 
 import useUserApiGet from '../../hooks/useUserApiGet'; 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const GroupPage = () => {
     // Fetch groups
@@ -163,7 +164,7 @@ const GroupPage = () => {
 
             if (isEditMode) {
                 response = await axios.put(
-                    `http://localhost:1337/api/groups/${currentGroupId}`, 
+                    `${apiUrl}/api/groups/${currentGroupId}`, 
                     payload,
                     { 
                         headers: {
@@ -175,7 +176,7 @@ const GroupPage = () => {
                 setNotification({ type: 'success', message: 'Groupe modifié avec succès !' });
             } else {
                 response = await axios.post(
-                    'http://localhost:1337/api/groups', 
+                    apiUrl+'/api/groups', 
                     payload,
                     { 
                         headers: {
@@ -236,7 +237,7 @@ const GroupPage = () => {
         }
 
         try {
-            await axios.delete(`http://localhost:1337/api/groups/${groupId}`, {
+            await axios.delete(`${apiUrl}/api/groups/${groupId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

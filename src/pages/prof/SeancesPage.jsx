@@ -3,6 +3,7 @@ import useApiGet from '../../hooks/useApiGet';
 import useApiUpdate from '../../hooks/useApiUpdate';
 import axios from 'axios';
 import SeanceStudentModal from '../../components/SeanceStudentModal';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const HOURS = [
   '08:00', '09:00', '10:00', '11:00', '12:00',
@@ -49,13 +50,13 @@ const SeancesPage = () => {
       }
     };
     if (editSeance) {
-      await axios.put(`http://localhost:1337/api/seances/${editSeance.documentId}`, payload, {
+      await axios.put(`${apiUrl}/api/seances/${editSeance.documentId}`, payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwt')}`
         }
       });
     } else {
-      await axios.post('http://localhost:1337/api/seances', payload, {
+      await axios.post(apiUrl+'/api/seances', payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwt')}`
         }
@@ -132,7 +133,7 @@ const SeancesPage = () => {
                                             <button 
                                                 className="btn btn-sm btn-danger me-2" 
                                                 title="Supprimer"
-                                                onClick={async () => { await axios.delete(`http://localhost:1337/api/seances/${seance.documentId}`, {
+                                                onClick={async () => { await axios.delete(`${apiUrl}/api/seances/${seance.documentId}`, {
                                                 headers: {
                                                   Authorization: `Bearer ${localStorage.getItem('jwt')}`
                                                 }});window.location.reload(); }} 
@@ -158,32 +159,7 @@ const SeancesPage = () => {
                                             </button>
                                         </td>
                                     </tr>
-            // <div
-            //   key={seance.id}
-            //   className="border rounded p-4 shadow-sm hover:shadow-md transition"
-            // >
-            //   <p><strong>Date :</strong> {seance.Date}</p>
-            //   <p><strong>Heure :</strong> {seance.debut.slice(0, 5)} - {seance.fin.slice(0, 5)}</p>
-            //   <p><strong>Module :</strong> {seance.module?.Name}</p>
-            //   <p><strong>Groupe :</strong> {seance.group?.name}</p>
-            //   <div className="mt-2 space-x-2">
-            //     <button
-            //       onClick={() => handleEdit(seance)}
-            //       className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-            //     >Modifier</button>
-            //     <button
-            //       onClick={async () => { await axios.delete(`http://localhost:1337/api/seances/${seance.documentId}`, {
-            //         headers: {
-            //           Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            //         }});window.location.reload(); }}
-            //       className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
-            //     >Supprimer</button>
-            //     <button
-            //       onClick={() => window.open(`/qrcode/${seance.documentId}`, '_blank')}
-            //       className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700"
-            //     >Afficher QR</button>
-            //   </div>
-            // </div>
+
           ))
         ) : (
           <td colSpan="5" className="text-center text-muted py-4">Aucune séance disponible.</td>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const [identifier, setIdentifier] = useState('');
@@ -11,7 +12,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:1337/api/auth/local', {
+      const res = await axios.post(apiUrl+'/api/auth/local', {
         identifier,
         password,
       });

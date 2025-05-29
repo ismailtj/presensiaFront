@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const useApiPost = (endpoint, options = {}, autoLoad = true,load) => {
     const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ const useApiPost = (endpoint, options = {}, autoLoad = true,load) => {
         setLoading(true);
         try {
           
-          const res = await axios.post('http://localhost:1337/api'+endpoint,
+          const res = await axios.post(apiUrl+'/api'+endpoint,
             {
                 data:load
             } ,

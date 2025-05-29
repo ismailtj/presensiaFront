@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal } from 'bootstrap';
 import useUserApiGet from '../../hooks/useUserApiGet'; // Votre hook personnalisé
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const UserPage = () => {
     const { data, loading, error, refetch } = useUserApiGet('/users'); // Assurez-vous que votre useApiGet gère le préfixe /api
@@ -144,7 +145,7 @@ const UserPage = () => {
 
             if (isEditMode) {
                 response = await axios.put(
-                    `http://localhost:1337/api/users/${currentUserId}`, 
+                    `${apiUrl}/api/users/${currentUserId}`, 
                     payload,
                     { 
                         headers: {
@@ -156,7 +157,7 @@ const UserPage = () => {
                 setNotification({ type: 'success', message: 'Utilisateur modifié avec succès !' });
             } else {
                 response = await axios.post(
-                    'http://localhost:1337/api/users', 
+                    apiUrl+'/api/users', 
                     payload,
                     { 
                         headers: {
@@ -217,7 +218,7 @@ const UserPage = () => {
         }
 
         try {
-            await axios.delete(`http://localhost:1337/api/users/${userId}`, {
+            await axios.delete(`${apiUrl}/api/users/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

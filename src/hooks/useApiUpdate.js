@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const useApiUpdate = (endpoint, options = {}, autoLoad = true,load,id) => {
     const [data, setData] = useState([]);
@@ -13,7 +13,7 @@ const useApiUpdate = (endpoint, options = {}, autoLoad = true,load,id) => {
       setLoading(true);
       try {
         
-        const res = await axios.put('http://localhost:1337/api'+endpoint+'/'+id,
+        const res = await axios.put(apiUrl+'/api'+endpoint+'/'+id,
             {
                 data:load
             } ,

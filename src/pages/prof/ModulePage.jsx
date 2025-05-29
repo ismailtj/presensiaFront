@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal } from 'bootstrap'; // Assure-toi que Bootstrap JS est correctement importé si tu l'utilises
 import useApiGet from '../../hooks/useApiGet'; // Ton hook personnalisé
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const ModulePage = () => {
     // 1. Déstructurer 'refetch' du hook useApiGet
@@ -106,7 +107,7 @@ const ModulePage = () => {
             if (isEditMode) {
                 // Requête d'édition (PUT)
                 response = await axios.put(
-                    `http://localhost:1337/api/modules/${currentModuleId}`, // URL d'édition
+                    `${apiUrl}/api/modules/${currentModuleId}`, // URL d'édition
                     { 
                         "data": {
                             Name: newModuleName,
@@ -123,7 +124,7 @@ const ModulePage = () => {
             } else {
                 // Requête d'ajout (POST)
                 response = await axios.post(
-                    'http://localhost:1337/api/modules', // URL d'ajout
+                    apiUrl+'/api/modules', // URL d'ajout
                     { 
                         "data": {
                             Name: newModuleName,
@@ -188,7 +189,7 @@ const ModulePage = () => {
         }
 
         try {
-            await axios.delete(`http://localhost:1337/api/modules/${moduleId}`, {
+            await axios.delete(`${apiUrl}/api/modules/${moduleId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

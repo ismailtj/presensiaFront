@@ -2,6 +2,7 @@ import axios from 'axios';
 import QrScanner from 'qr-scanner';
 import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const EtudiantPage = () => {
@@ -20,12 +21,13 @@ const EtudiantPage = () => {
           try {
             const seanceId = result.data; // ID string du QR → int
             const eleveId = localStorage.getItem('id'); // id stocké localement
-            const token = localStorage.getItem('jwt');
-            
             if (!seanceId || !eleveId) {
               alert('ID élève ou ID séance invalide.');
               return;
             }
+            scannerRef.current?.stop(); // stop scan après 1 lecture
+            const token = localStorage.getItem('jwt');
+            
             const payload = {
               data: {
                 pointage: new Date().toISOString(),
@@ -35,7 +37,7 @@ const EtudiantPage = () => {
             }
             
 
-            const response = await axios.post('http://localhost:1337/api/emargements', payload , {
+            const response = await axios.post(apiUrl+'/api/emargements', payload , {
               headers: {
                 Authorization: `Bearer ${token}`
               }
@@ -52,7 +54,7 @@ const EtudiantPage = () => {
             console.error('Erreur API :', error);
             alert('Erreur lors du pointage. Réessayez.');
           }
-          scannerRef.current?.stop(); // stop scan après 1 lecture
+          
         },
         {
           returnDetailedScanResult: true,

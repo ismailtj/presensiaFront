@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const getStatutPresence = (emargement, heureDebut, heureFin) => {
   if (!emargement) return 'absent';
+  
 
   
 
@@ -30,12 +32,12 @@ const SeanceStudentModal = ({ seance, groupId, onClose }) => {
     const fetchData = async () => {
       try {
         const [studentsRes, emargementsRes] = await Promise.all([
-          axios.get(`http://localhost:1337/api/groups/${groupId}?populate=*`, {
+          axios.get(`${apiUrl}/api/groups/${groupId}?populate=*`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwt')}`
         }
       }  ),
-          axios.get(`http://localhost:1337/api/emargements?populate=*&filters[seance][id][$eq]=${seance.id}`,{
+          axios.get(`${apiUrl}/api/emargements?populate=*&filters[seance][id][$eq]=${seance.id}`,{
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwt')}`
         }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const useAPIDelete = (endpoint, id, options = {}, autoLoad = true) => {
     const [data, setData] = useState([]);
@@ -12,7 +13,7 @@ const useAPIDelete = (endpoint, id, options = {}, autoLoad = true) => {
       setLoading(true);
       try {
         
-        const res = await axios.delete('http://localhost:1337/api'+endpoint+ `/${id}`,
+        const res = await axios.delete(apiUrl+'/api'+endpoint+ `/${id}`,
         {
           headers: {
             Authorization:  `Bearer ${token}`
