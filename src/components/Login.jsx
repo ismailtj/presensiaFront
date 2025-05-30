@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,21 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // <-- NOUVEL ÉTAT DE CHARGEMENT
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    const userRole = localStorage.getItem('role');
+
+    if (jwt && userRole) { 
+      if (userRole === 'prof') {
+        navigate('/prof');
+      } else if (userRole === 'etudiant') { 
+        navigate('/etudiant');
+      }
+      
+    }
+  }, [navigate]);
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
